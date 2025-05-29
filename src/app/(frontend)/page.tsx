@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 import config from '@/payload.config'
 import './styles.css'
 import Galery from '@/components/Galery'
+import Animations from '@/_components/animations'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -27,6 +28,7 @@ export default async function HomePage() {
   return (
     <div className="home">
       <div className="content">
+        <Animations />
         <Galery images={images} />
       </div>
     </div>

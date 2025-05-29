@@ -2,6 +2,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -26,9 +27,16 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  /*
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
+    },
+  }),*/
+  db: sqliteAdapter({
+    client: {
+      url: process.env.DATABASE_URI || '',
+      authToken: process.env.DATABASE_AUTH_TOKEN || '',
     },
   }),
   sharp,
