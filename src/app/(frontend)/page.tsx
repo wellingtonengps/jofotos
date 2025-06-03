@@ -5,15 +5,13 @@ import React from 'react'
 import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
-import './styles.css'
-import Galery from '@/components/Galery'
-import Animations from '@/_components/animations'
+//import './styles.css'
+import Galery from '@/_components/galery'
+import '../../styles/globals.css'
 
 export default async function HomePage() {
-  const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
   const medias = await payload.find({
     collection: 'media',
   })
@@ -21,15 +19,14 @@ export default async function HomePage() {
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   const images = medias.docs.map((doc: any) => ({
-    id: doc.id,
-    url: typeof doc.url === 'string' ? doc.url : doc.image?.url,
+    image: typeof doc.url === 'string' ? doc.url : doc.image?.url,
+    text: doc.alt || doc.filename || 'Imagem', // escolha um texto que tenha nos seus dados
   }))
 
   return (
-    <div className="home">
-      <div className="content">
-        <Animations />
-        <Galery images={images} />
+    <div className="home bg-redssize-max">
+      <div className="content bg-red">
+        <Galery items={images} />
       </div>
     </div>
   )
